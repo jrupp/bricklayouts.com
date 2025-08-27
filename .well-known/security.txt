@@ -1,0 +1,4 @@
+Contact: mailto:security@bricklayouts.com
+Expires: 2027-01-01T04:58:00.000Z
+Preferred-Languages: en
+Canonical: https://www.bricklayouts.com/.well-known/security.txt
