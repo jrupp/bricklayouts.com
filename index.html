@@ -113,6 +113,11 @@ header h1 {
 
 footer{background:var(--blue-d);padding:2rem 0;font-size:.875rem;color:#fff;}
 
+.social-icons{display:flex;gap:1.25rem;justify-content:center;margin:0 0 1rem;padding:0;}
+.social-icons a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;color:#fff;text-decoration:none;transition:opacity .2s;}
+.social-icons a:hover{opacity:.8;}
+.social-icons img{width:30px;height:30px;display:block;filter:brightness(0) invert(1);}
+
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
 .subscribe-wrapper.pulse{animation:pulse 1s 2;}
 </style>
@@ -176,7 +181,20 @@ footer{background:var(--blue-d);padding:2rem 0;font-size:.875rem;color:#fff;}
   </div>
 </section>
 
-<footer><div class="container">© 2025 BrickLayouts. All rights reserved.<br>LEGO® is a trademark of the LEGO® Group of companies which does not sponsor, authorize or endorse this site.</div></footer>
+<footer><div class="container">
+  <div class="social-icons" aria-label="Social media links">
+    <a class="plausible-event-name=Social+Facebook" href="https://www.facebook.com/BrickLayouts/" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="facebook.svg" alt="Facebook" loading="lazy" decoding="async" width="30" height="30" />
+    </a>
+    <a class="plausible-event-name=Social+Instagram" href="https://www.instagram.com/bricklayouts/" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="instagram.svg" alt="Instagram" loading="lazy" decoding="async" width="30" height="30" />
+    </a>
+    <a class="plausible-event-name=Social+X" href="https://x.com/BrickLayouts" target="_blank" rel="noopener" aria-label="X (formerly Twitter)">
+      <img src="x.svg" alt="X" loading="lazy" decoding="async" width="30" height="30" />
+    </a>
+  </div>
+  © 2025 BrickLayouts. All rights reserved.<br>LEGO® is a trademark of the LEGO® Group of companies which does not sponsor, authorize or endorse this site.
+  </div></footer>
 <script>
 /* FAQ toggle with smooth scroll */
 const faqBtn=document.getElementById('faq-title');
