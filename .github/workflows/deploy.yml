@@ -1,0 +1,76 @@
+name: Build, Prerender & Deploy to S3
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Required permissions for OIDC authentication with AWS
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
+      - name: Build application
+        run: npm run build
+
+      - name: Prerender static pages
+        run: npm run prerender
+
+      - name: Generate sitemap.xml
+        run: node scripts/generate-sitemap.mjs
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+      - name: Sync to S3
+        run: |
+          # Hashed assets (JS, CSS) - long cache, immutable
+          aws s3 sync build/assets/ s3://${{ secrets.S3_BUCKET }}/assets/ \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable"
+          
+          # Screenshots - stable filenames, use moderate cache with revalidation
+          aws s3 sync build/screenshots/ s3://${{ secrets.S3_BUCKET }}/screenshots/ \
+            --delete \
+            --cache-control "public, max-age=86400, stale-while-revalidate=604800"
+          
+          # HTML files - no cache
+          aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} \
+            --delete \
+            --cache-control "public, max-age=0, must-revalidate" \
+            --exclude "assets/*" \
+            --exclude "screenshots/*"
+
+      - name: Invalidate CloudFront cache
+        if: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"

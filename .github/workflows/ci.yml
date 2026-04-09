@@ -1,0 +1,100 @@
+name: CI — Lint, Build & Prerender
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+  build:
+    name: Build & Prerender
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
+      - name: Prerender static pages
+        run: npm run prerender
+
+      - name: Verify prerendered HTML files exist
+        run: |
+          missing=0
+          for route in index about/index pricing/index contact/index \
+                       privacy/index signup/index terms/index; do
+            file="build/${route}.html"
+            if [ ! -f "$file" ]; then
+              echo "::error::Missing prerendered file: $file"
+              missing=1
+            else
+              echo "✓ $file"
+            fi
+          done
+          if [ "$missing" -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Check prerendered HTML for SEO meta tags
+        run: |
+          errors=0
+          for file in build/index.html build/about/index.html \
+                      build/pricing/index.html build/contact/index.html \
+                      build/privacy/index.html build/signup/index.html \
+                      build/terms/index.html; do
+            if ! grep -q '<title>' "$file"; then
+              echo "::error::Missing <title> in $file"
+              errors=1
+            fi
+            if ! grep -q 'meta name="description"' "$file"; then
+              echo "::error::Missing meta description in $file"
+              errors=1
+            fi
+            if ! grep -q 'application/ld+json' "$file"; then
+              echo "::error::Missing JSON-LD structured data in $file"
+              errors=1
+            fi
+          done
+          if [ "$errors" -eq 1 ]; then
+            exit 1
+          fi
+          echo "All prerendered pages have required SEO tags."
