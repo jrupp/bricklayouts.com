@@ -190,13 +190,15 @@ export function Pricing() {
                   variant={plan.popular ? 'default' : 'outline'}
                   asChild
                 >
-                  {plan.name === 'Club' ? (
+                  {plan.name === 'Club' && (
                     <Link to="/contact">{plan.cta}</Link>
-                  ) : (plan.name === 'Pro' ? (
+                  )}
+                  {plan.name === 'Pro' && (
                     <a href="#mailing-list">{plan.cta}</a>
-                  ) : (
+                  )}
+                  {plan.name !== 'Club' && plan.name !== 'Pro' && (
                     <a className="plausible-event-name=Open+BrickLayouts" href="https://app.bricklayouts.com/">{plan.cta}</a>
-                  ))}
+                  )}
                 </Button>
 
                 <div className="space-y-3 pt-6 border-t">

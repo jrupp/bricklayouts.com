@@ -60,6 +60,12 @@ Theme tokens (colors, radii) are defined as CSS custom properties in `src/index.
 
 Each page uses `src/components/Seo.tsx` with `<Helmet>` for title, meta, canonical, Open Graph, and JSON-LD structured data. Prerendering bakes these into static HTML.
 
+## llms.txt
+
+`public/llms.txt` is served at `https://www.bricklayouts.com/llms.txt` and provides a curated, LLM-readable summary of the site for AI agents and assistants.
+
+**Keep it up to date whenever page content changes.** If you add, remove, or significantly change content on any page (features, pricing, policies, contact info, etc.), review `public/llms.txt` and update the relevant link descriptions or body text to reflect the change.
+
 ## CI/CD
 
 GitHub Actions (`.github/workflows/deploy.yml`) on push to `main`:
