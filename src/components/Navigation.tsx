@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 
-type Page = 'home' | 'pricing' | 'about' | 'contact' | 'privacy' | 'terms' | 'signup';
+type Page = 'home' | 'pricing' | 'about' | 'contact' | 'privacy' | 'terms' | 'signup' | 'bw26';
 
 interface NavigationProps {
   currentPage: Page;

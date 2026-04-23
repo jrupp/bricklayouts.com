@@ -9,6 +9,7 @@ import { Contact } from './components/Contact';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsConditions } from './components/TermsConditions';
 import { SignUp } from './components/SignUp';
+import { BrickworldChicago2026 } from './components/BrickworldChicago2026';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
 import { Toaster } from './components/ui/sonner';
@@ -43,6 +44,8 @@ function AppContent() {
         return 'terms';
       case '/signup':
         return 'signup';
+      case '/bw26':
+        return 'bw26';
       default:
         return 'home';
     }
@@ -61,6 +64,7 @@ function AppContent() {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsConditions />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/bw26" element={<BrickworldChicago2026 />} />
         </Routes>
       </main>
       <Footer />
