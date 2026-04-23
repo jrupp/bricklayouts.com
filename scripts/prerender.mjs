@@ -25,6 +25,7 @@ const routes = [
   '/privacy',
   '/terms',
   '/signup',
+  '/bw26',
 ];
 
 // Simple static file server for the build directory

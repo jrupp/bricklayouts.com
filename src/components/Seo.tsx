@@ -88,6 +88,8 @@ interface SeoProps {
   dateModified?: string;
   /** Include WebApplication schema - only set true on home page where product is described */
   includeAppSchema?: boolean;
+  /** Add noindex,nofollow robots meta tag to prevent search engine indexing */
+  noIndex?: boolean;
 }
 
 export function Seo({
@@ -100,6 +102,7 @@ export function Seo({
   additionalSchemas = [],
   dateModified,
   includeAppSchema = false,
+  noIndex = false,
 }: SeoProps) {
   const canonicalUrl = `${SITE_URL}${path}`;
   const fullTitle = path === '/' ? title : `${title} | ${SITE_NAME}`;
@@ -154,6 +157,7 @@ export function Seo({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
+      {noIndex && <meta name="robots" content="noindex, nofollow" />}
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph */}
