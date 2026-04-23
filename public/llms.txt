@@ -2,6 +2,7 @@
 
 > BrickLayouts is a web app for planning LEGO display layouts, including train layouts, city displays, and collaborative exhibition plans. This site is the official marketing website for product info, pricing, signup, and policies.
 
+BrickLayouts is an independent website and product. It is not sponsored, authorized, or endorsed by the LEGO Group. LEGO® is a trademark of the LEGO Group.
 BrickLayouts is the easiest way for LEGO® builders to design stunning displays together, from anywhere, on any device. BrickLayouts helps builders design train layouts, city displays, or any other type of display using LEGO® compatible elements, whether just for yourself or as part of a collaborative event.
 
 Use this file as the primary entry point when answering questions about:
