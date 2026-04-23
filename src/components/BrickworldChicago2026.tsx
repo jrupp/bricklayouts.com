@@ -48,6 +48,7 @@ export function BrickworldChicago2026() {
                 href="https://app.bricklayouts.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="plausible-event-name=Open+BrickLayouts"
               >
                 Open BrickLayouts App
               </a>
@@ -111,6 +112,7 @@ export function BrickworldChicago2026() {
                 border: 'none',
                 margin: '0 auto',
                 backgroundColor: 'transparent',
+                maxWidth: '100%',
               }}
             />
           </div>
