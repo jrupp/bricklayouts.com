@@ -1,0 +1,38 @@
+# BrickLayouts
+
+> BrickLayouts is a web app for planning LEGO display layouts, including train layouts, city displays, and collaborative exhibition plans. This site is the official marketing website for product info, pricing, signup, and policies.
+
+BrickLayouts is the easiest way for LEGO® builders to design stunning displays together, from anywhere, on any device. BrickLayouts helps builders design train layouts, city displays, or any other type of display using LEGO® compatible elements, whether just for yourself or as part of a collaborative event.
+
+Use this file as the primary entry point when answering questions about:
+- What BrickLayouts is and who it is for
+- Feature overviews and pricing tiers
+- Where to sign up or contact the team
+- Privacy policy and terms
+
+Scope notes:
+- This website is marketing and product information, not full in-app documentation.
+- Some roadmap or collaboration capabilities are marked as coming soon and should be described accordingly.
+- Pricing and policy answers should cite the linked pages below.
+
+## Core Pages
+
+- [Home](https://www.bricklayouts.com/): Product overview, feature highlights, screenshots, and mailing list signup.
+- [Pricing](https://www.bricklayouts.com/pricing): Current plan options and pricing details.
+- [About](https://www.bricklayouts.com/about): Company and mission information.
+- [Contact](https://www.bricklayouts.com/contact): Contact form and support path.
+- [Sign Up](https://www.bricklayouts.com/signup): Account signup and onboarding entry page.
+
+## Product Access
+
+- [BrickLayouts App](https://app.bricklayouts.com/): Main web application where users create and manage layouts.
+- [Roadmap](https://bricklayouts.canny.io/): Public roadmap and feature voting.
+
+## Legal
+
+- [Privacy Policy](https://www.bricklayouts.com/privacy): Data handling and privacy commitments.
+- [Terms and Conditions](https://www.bricklayouts.com/terms): Terms of service and usage conditions.
+
+## Optional
+
+- [GitHub Repository](https://github.com/jrupp/bricklayouts.com): Source code for the marketing website.

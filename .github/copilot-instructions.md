@@ -83,6 +83,7 @@ A successful `npm run build:static` (exit code 0) is sufficient to validate any 
 ├── scripts/
 │   └── prerender.mjs           # Playwright script: serves build/, visits each route, snapshots HTML
 ├── public/
+│   ├── llms.txt                    # LLM-readable site summary, served at /llms.txt
 │   └── screenshots/            # Static images (stable URLs, not hashed by Vite)
 ├── build/                      # Build output (gitignored)
 └── .github/
@@ -94,6 +95,7 @@ A successful `npm run build:static` (exit code 0) is sufficient to validate any 
 
 - **Routing:** `src/App.tsx` defines all routes using `react-router-dom` `<BrowserRouter>`. Routes: `/`, `/pricing`, `/about`, `/contact`, `/privacy`, `/terms`, `/signup`.
 - **SEO:** Each page component uses `src/components/Seo.tsx` which renders `<Helmet>` tags (title, meta, canonical, Open Graph, JSON-LD). Prerendering bakes these into static HTML.
+- **llms.txt:** `public/llms.txt` is served at `/llms.txt` and provides a curated LLM-readable summary of the site. **Keep it up to date whenever page content changes** — if features, pricing, policies, or contact information are added or changed, review and update `public/llms.txt` to reflect those changes.
 - **Styling:** Tailwind CSS v4 with CSS-first configuration. Theme tokens (colors, radii) are defined as CSS custom properties in `src/styles/globals.css` using `@theme inline`. The compiled output is `src/index.css` — **do not edit `index.css` directly**; edit `globals.css` or use Tailwind utility classes in components.
 - **UI components:** `src/components/ui/` contains Shadcn UI components. They use the `cn()` utility from `src/components/ui/utils.ts` for conditional class merging.
 - **Path alias:** `@` maps to `src/` (configured in `vite.config.ts`). Import with `@/components/...`, `@/styles/...`.
