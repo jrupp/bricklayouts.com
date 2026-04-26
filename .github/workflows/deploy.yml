@@ -65,18 +65,12 @@ jobs:
             --size-only \
             --cache-control "public, max-age=86400, stale-while-revalidate=604800"
           
-          # HTML files - no cache
+          # HTML + sitemap - no cache, always sync (content can change without size changing)
           aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} \
             --delete \
-            --size-only \
             --cache-control "public, max-age=0, must-revalidate" \
             --exclude "assets/*" \
-            --exclude "screenshots/*" \
-            --exclude "sitemap.xml"
-
-          # Sitemap - no cache, no --size-only (content changes without size changing)
-          aws s3 cp build/sitemap.xml s3://${{ secrets.S3_BUCKET }}/sitemap.xml \
-            --cache-control "public, max-age=0, must-revalidate"
+            --exclude "screenshots/*"
 
       - name: Invalidate CloudFront cache
         if: ${{ env.CLOUDFRONT_DISTRIBUTION_ID != '' }}
