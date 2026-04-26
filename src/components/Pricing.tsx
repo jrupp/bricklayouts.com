@@ -185,21 +185,25 @@ export function Pricing() {
                   )}
                 </div>
 
-                <Button
-                  className="w-full"
-                  variant={plan.popular ? 'default' : 'outline'}
-                  asChild
-                >
-                  {plan.name === 'Club' && (
-                    <Link to="/contact">{plan.cta}</Link>
-                  )}
-                  {plan.name === 'Pro' && (
-                    <a href="#mailing-list">{plan.cta}</a>
-                  )}
-                  {plan.name !== 'Club' && plan.name !== 'Pro' && (
-                    <a className="plausible-event-name=Open+BrickLayouts" href="https://app.bricklayouts.com/">{plan.cta}</a>
-                  )}
-                </Button>
+                {(() => {
+                  let ctaLink;
+                  if (plan.name === 'Club') {
+                    ctaLink = <Link to="/contact">{plan.cta}</Link>;
+                  } else if (plan.name === 'Pro') {
+                    ctaLink = <a href="#mailing-list">{plan.cta}</a>;
+                  } else {
+                    ctaLink = <a className="plausible-event-name=Open+BrickLayouts" href="https://app.bricklayouts.com/">{plan.cta}</a>;
+                  }
+                  return (
+                    <Button
+                      className="w-full"
+                      variant={plan.popular ? 'default' : 'outline'}
+                      asChild
+                    >
+                      {ctaLink}
+                    </Button>
+                  );
+                })()}
 
                 <div className="space-y-3 pt-6 border-t">
                   {plan.features.map((feature) => (
