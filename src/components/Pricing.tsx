@@ -1,6 +1,5 @@
 import { Check, X } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Seo, SITE_URL } from './Seo';
@@ -45,7 +44,7 @@ export function Pricing() {
       cta: 'Signup',
       popular: true,
       available: true,
-      url: `https://app.bricklayouts.com/?subscribe=true`,
+      url: 'https://app.bricklayouts.com/?subscribe=true',
     },
     /* {
       name: 'Club',
