@@ -35,6 +35,7 @@ export function Pricing() {
         { text: '<strong>Unlimited</strong> saved layouts', included: true },
         // { text: '<strong>Publish</strong> to community gallery', included: true },
         { text: 'Cloud storage & <strong>backups</strong>', included: true },
+        { text: 'Share view-only layouts with a public link', included: true },
         { text: 'Full parts library', included: true },
         { text: 'Custom shapes & labels', included: true },
         { text: 'Detailed parts list with purchase links', included: true },
