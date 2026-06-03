@@ -1,6 +1,5 @@
 import { Check, X } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Seo, SITE_URL } from './Seo';
@@ -24,7 +23,8 @@ export function Pricing() {
         // { text: 'Collaboration features', included: false },
       ],
       cta: 'Start Building',
-      popular: true,
+      popular: false,
+      available: true,
       url: 'https://app.bricklayouts.com/',
     },
     {
@@ -33,7 +33,7 @@ export function Pricing() {
       price: { monthly: 7, annual: 70 },
       features: [
         { text: '<strong>Unlimited</strong> saved layouts', included: true },
-        { text: '<strong>Publish</strong> to community gallery', included: true },
+        // { text: '<strong>Publish</strong> to community gallery', included: true },
         { text: 'Cloud storage & <strong>backups</strong>', included: true },
         { text: 'Full parts library', included: true },
         { text: 'Custom shapes & labels', included: true },
@@ -41,9 +41,10 @@ export function Pricing() {
         { text: '24/7 access to tutorials & support resources', included: true },
         // { text: 'Collaboration (up to 5 members)', included: true },
       ],
-      cta: 'Get Notified on Launch', // Was: Signup
-      popular: false,
-      url: `${SITE_URL}/pricing`, // Previous url was `${SITE_URL}/signup`
+      cta: 'Signup',
+      popular: true,
+      available: true,
+      url: 'https://app.bricklayouts.com/?subscribe=true',
     },
     /* {
       name: 'Club',
@@ -59,8 +60,10 @@ export function Pricing() {
         { text: 'Admin controls & permissions', included: true },
         { text: 'Dedicated account support', included: true },
       ],
-      cta: 'Contact Us',
+      cta: 'Get Notified on Launch',  // Was "Contact Us"
       popular: false,
+      available: false,
+      url: `${SITE_URL}/contact`,
     }, */
   ];
 
@@ -73,8 +76,8 @@ export function Pricing() {
       '@type': 'Offer',
       name: plan.name,
       description: plan.description,
-      availability: `https://schema.org/${plan.price.monthly === 0 ? 'InStock' : 'LimitedAvailability'}`,
-      ...(plan.price.monthly !== 0 ? { availabilityStarts: new Date().toISOString() } : {}),
+      availability: `https://schema.org/${plan.available ? 'InStock' : 'LimitedAvailability'}`,
+      ...(plan.available === false ? { availabilityStarts: new Date().toISOString() } : {}),
       priceSpecification: {
         '@type': 'UnitPriceSpecification',
         price: billingPeriod === 'monthly' ? plan.price.monthly : plan.price.annual,
@@ -149,11 +152,12 @@ export function Pricing() {
                     : 'border-2 border-border'
                 }`}
               >
-                {plan.popular ? (
+                {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm">
                     Most Popular
                   </div>
-                ) : (
+                )}
+                {!plan.available && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-destructive text-primary-foreground px-4 py-1 rounded-full text-sm">
                     Coming Soon
                   </div>
@@ -162,12 +166,12 @@ export function Pricing() {
                 <div className="space-y-2">
                   <h3>{plan.name}</h3>
                   <p className="text-sm text-muted-foreground">{plan.description}</p>
-                  {!plan.popular && (
+                  {!plan.available && (
                     <p className="text-sm text-muted-foreground"><b>This plan is coming soon.</b></p>
                   )}
                 </div>
 
-                <div className={`space-y-1 ${!plan.popular ? 'line-through text-muted-foreground' : ''}`}>
+                <div className={`space-y-1 ${!plan.available ? 'line-through text-muted-foreground' : ''}`}>
                   <div className="flex items-baseline gap-2">
                     <span className="text-4xl">
                       ${billingPeriod === 'monthly' ? plan.price.monthly : plan.price.annual}
@@ -188,9 +192,9 @@ export function Pricing() {
                 {(() => {
                   let ctaLink;
                   if (plan.name === 'Club') {
-                    ctaLink = <Link to="/contact">{plan.cta}</Link>;
-                  } else if (plan.name === 'Pro') {
                     ctaLink = <a href="#mailing-list">{plan.cta}</a>;
+                  } else if (plan.name === 'Pro') {
+                    ctaLink = <a className="plausible-event-name=Subscribe+to+BrickLayouts" href="https://app.bricklayouts.com/?subscribe=true">{plan.cta}</a>;
                   } else {
                     ctaLink = <a className="plausible-event-name=Open+BrickLayouts" href="https://app.bricklayouts.com/">{plan.cta}</a>;
                   }
