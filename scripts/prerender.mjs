@@ -29,6 +29,13 @@ const routes = [
 ];
 
 // Simple static file server for the build directory
+import {
+  resolve as pathResolve,
+  relative as pathRelative,
+  isAbsolute as pathIsAbsolute,
+  sep as pathSep,
+} from 'path';
+
 function createStaticServer(dir, port) {
   return new Promise((resolve) => {
     const server = createServer((req, res) => {
@@ -39,8 +46,17 @@ function createStaticServer(dir, port) {
         filePath = join(dir, 'index.html');
       }
 
+      const baseFull = pathResolve(dir);
+      const targetFull = pathResolve(filePath);
+      const rel = pathRelative(baseFull, targetFull);
+      if (rel === '..' || rel.startsWith(`..${pathSep}`) || pathIsAbsolute(rel)) {
+        res.writeHead(400);
+        res.end('Invalid file path');
+        return;
+      }
+
       try {
-        const content = readFileSync(filePath);
+        const content = readFileSync(targetFull);
         const ext = filePath.split('.').pop();
         const contentTypes = {
           html: 'text/html',
